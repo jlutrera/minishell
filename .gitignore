@@ -1,0 +1,13 @@
+#hidden files
+.DS_store
+.vscode
+.git
+*.o
+*.a
+a.out
+*.txt
+minishell
+obj
+install_readline
+in
+out

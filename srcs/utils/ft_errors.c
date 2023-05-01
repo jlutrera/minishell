@@ -12,6 +12,17 @@
 
 #include "../../include/minishell.h"
 
+int	cd_error(char *s, char *dir)
+{
+	ft_putstr_fd("minishell: cd:", STDERR_FILENO);
+	ft_putstr_fd(s, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+	if (s)
+		free(s);
+	free(dir);
+	return (1);
+}
+
 void	cmd_error(int err)
 {
 	perror(strerror(err));
@@ -29,10 +40,13 @@ int	exit_error_token(int err, char *token)
 
 	if (err == -2)
 	{
-		ft_putstr_fd("minishell: syntax error near", STDERR_FILENO);
+		ft_putstr_fd("minishell: syntax error near ", STDERR_FILENO);
 		ft_putstr_fd("unexpected token `", STDERR_FILENO);
 		c = *token;
-		write(2, &c, 1);
+		if (c != ' ')
+			write(2, &c, 1);
+		else
+			ft_putstr_fd("newline", STDERR_FILENO);
 		write(2, "\'\n", 2);
 	}
 	if (err == -1)
