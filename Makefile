@@ -24,12 +24,12 @@ CC 			=	gcc
 CFLAGS 		=	-Wall -Wextra -Werror
 
 # Para jutrera-
-# INCLUDES 	= -I$(INCDIR)
-# LDFLAGS 	= -L./libft/ -lft -lreadline
+INCLUDES 	= -I$(INCDIR)
+LDFLAGS 	= -L./libft/ -lft -lreadline
 
 # Para adpachec
-INCLUDES 	= -I$(INCDIR) -Ivendor/readline/include
-LDFLAGS 	= -Llibft/ -lft -Lvendor/readline/lib -lreadline
+#INCLUDES 	= -I$(INCDIR) -Ivendor/readline/include
+#LDFLAGS 	= -Llibft/ -lft -Lvendor/readline/lib -lreadline
 
 LEAKS 		=	-fsanitize=address -g
 
@@ -94,7 +94,7 @@ all			: 	$(NAME)
 
 # Compile object files
 message		:	
-				@echo "$(YELLOW)Compiling program...$(RESET)"
+				@echo "$(YELLOW)Compiling program : $(NAME)$(RESET)"
 
 $(OBJDIR)/%.o: 	$(SRCDIR)/%.c
 				@mkdir -p $(dir $@)
@@ -104,7 +104,7 @@ $(OBJDIR)/%.o: 	$(SRCDIR)/%.c
 
 # Compile library
 $(LIBRARY)	:
-				@echo "$(YELLOW)Compiling library...$(RESET)"
+				@echo "$(YELLOW)Compiling library : $@$(RESET)"
 				@$(MAKE) --no-print-directory -C $(LIBDIR)
 
 # Link program
@@ -134,4 +134,4 @@ re			: 	fclean all
 -include $(OBJS:.o=.d)
 
 # Phony targets
-.PHONY		: 	all clean fclean re
+.PHONY		: 	all clean fclean re message
