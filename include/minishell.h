@@ -60,7 +60,6 @@ typedef struct s_pipe
 {
 	int		i;
 	int		num_pipes;
-	int		fd[2];
 	int		status;
 	int		err;
 	char	**paths;
@@ -70,6 +69,11 @@ typedef struct s_pipe
 	int		fd_out;
 	int		num_cmds;
 }			t_pipe;
+
+typedef struct s_fd
+{
+	int		fd[2];
+}			t_fd;
 
 // ******************************* builtins ***********************************
 int		exec_builtins(t_token *token_list, char ***new_environ,
@@ -94,6 +98,8 @@ t_pipe	init_pipe_struct(t_token *token_list,
 void	exec_one_command(t_token *token_list, t_pipe *pipe_s, \
 		char ***new_environ);
 void	pipex(t_pipe *pipe_s, char ***new_environ);
+int		ft_exit_fail(char *s);
+void	child_builtin(t_pipe *pipe_s, char ***new_environ);
 char	**get_cmd(t_token *token_list, int n_pipes);
 int		create_heredoc(t_token *t, char **new_environ);
 //		create_heredoc_utils.c
@@ -105,7 +111,7 @@ void	eliminate_quotes(char **s);
 char	**get_path(char **envp);
 int		get_size_cmd(char **cmd);
 char	**get_av(char **cmd);
-char	*try_access(char **cmd, char **paths);
+char	*try_access(char **cmd, char **paths, char ***new_environ);
 //		init_pipe_struct_utils.c
 t_token	*ft_last_inheredoc(t_token *token_list);
 t_token	*ft_last_inredirect(t_token *token_list);
@@ -155,4 +161,6 @@ int		exit_error_token(int err, char *token);
 void	cmd_error(int err);
 void	exit_error(int err);
 int		export_errors(char *s);
+char	*try_pwd_access(char **split_cmd, char ***new_environ, char *file_path);
+
 #endif
