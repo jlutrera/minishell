@@ -10,7 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
+
+static char	**env_creation(void)
+{
+	char	dir[1024];
+	char	**d;
+
+	d = (char **)ft_calloc(3, sizeof(char *));
+	if (!d)
+		return (0);
+	d[0] = ft_strdup("SHLVL=1");
+	if (getcwd(dir, sizeof(dir)) != NULL)
+		d[1] = ft_strdup(dir);
+	return (d);
+}
 
 char	**copy_environ(char **source)
 {
@@ -18,18 +32,20 @@ char	**copy_environ(char **source)
 	int		len;
 	int		i;
 
-	len = 0;
-	while (source[len])
-		len++;
-	dest = (char **)ft_calloc(len + 1, sizeof(char *));
-	if (!dest)
-		return (0);
-	i = 0;
-	while (source[i])
+	if (source && *source)
 	{
-		dest[i] = ft_strdup(source[i]);
-		i++;
+		len = 0;
+		while (source[len])
+			len++;
+		dest = (char **)ft_calloc(len + 1, sizeof(char *));
+		if (!dest)
+			return (0);
+		i = -1;
+		while (source[++i])
+			dest[i] = ft_strdup(source[i]);
+		dest[i] = 0;
 	}
-	dest[i] = 0;
+	else
+		dest = env_creation();
 	return (dest);
 }

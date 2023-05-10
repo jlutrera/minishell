@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	handler_ctrl_c(int sig)
 {
 	(void)sig;
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	exit (0);
 }
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 int	exec_builtins(t_token *token_list, char ***new_environ,
 		int status, int is_pipe)
@@ -27,5 +27,8 @@ int	exec_builtins(t_token *token_list, char ***new_environ,
 		return (ft_unset(token_list, new_environ, is_pipe));
 	else if (ft_strcmp(token_list->token, "exit") == 0)
 		return (ft_exit(token_list, status, is_pipe));
-	return (ft_env(token_list, new_environ, is_pipe));
+	else if (ft_strcmp(token_list->token, "env") == 0)
+		return (ft_env(token_list, new_environ, is_pipe));
+	else
+		return (0);
 }

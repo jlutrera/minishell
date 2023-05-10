@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 int	cd_error(char *s, char *dir)
 {
@@ -59,28 +59,16 @@ int	exit_error_token(int err, char *token)
 
 int	export_errors(char *s)
 {
-	int	e;
-	int	i;
-
-	e = 0;
 	if (s[0] == '=')
 	{
 		ft_putstr_fd("minishell: export: bad identifier\n", STDERR_FILENO);
-		e = 1;
+		return (1);
 	}
-	else
+	else if (!ft_isalpha(s[0]) && s[0] != '_')
 	{
-		i = 0;
-		while (s[i] && s[i] != '=' && e == 0)
-		{
-			if (!ft_isalpha(s[i]) && s[i] != '_')
-			{
-				ft_putstr_fd("minishell: export: bad identifier\n", \
-				STDERR_FILENO);
-				e = 1;
-			}			
-			i++;
-		}
+		ft_putstr_fd("minishell: export: bad identifier\n", \
+			STDERR_FILENO);
+		return (1);
 	}
-	return (e);
+	return (0);
 }

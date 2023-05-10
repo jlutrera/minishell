@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 int	ft_check_var_exist(char *token, char ***new_environ)
 {
@@ -20,12 +20,12 @@ int	ft_check_var_exist(char *token, char ***new_environ)
 
 	len = 0;
 	while (token[len] && token[len] != '=')
-			len++;
+		len++;
 	i = -1;
 	while ((*new_environ)[++i])
 	{
 		j = 0;
-		while ((*new_environ)[i][j] != '=')
+		while ((*new_environ)[i][j] && (*new_environ)[i][j] != '=')
 			j++;
 		if (len == j && !ft_strncmp(token, (*new_environ)[i], j))
 			return (i);
@@ -61,16 +61,10 @@ static void	ft_execute_export(t_token **p, char ***new_environ, int *len)
 
 	i = ft_check_var_exist((*p)->token, new_environ);
 	equal = ft_strchr((*p)->token, '=');
+	if (ft_strcmp(equal, "=") == 0)
+		(*p)->token[ft_strlen((*p)->token) - 1] = 0;
 	if (i < 0)
-	{
-		if (!equal)
-		{
-			s = ft_strjoin((*p)->token, "=''");
-			free((*p)->token);
-			(*p)->token = s;
-		}
 		ft_extend_env((*p)->token, new_environ, len);
-	}
 	else if (equal && *(equal + 1) != 0)
 	{
 		free((*new_environ)[i]);

@@ -24,12 +24,12 @@ CC 			=	gcc
 CFLAGS 		=	-Wall -Wextra -Werror
 
 # Para jutrera-
-INCLUDES 	= -I$(INCDIR)
-LDFLAGS 	= -L./libft/ -lft -lreadline
+# INCLUDES 	= -I$(INCDIR)
+# LDFLAGS 	= -L./libft/ -lft -lreadline
 
 # Para adpachec
-#INCLUDES 	= -I$(INCDIR) -Ivendor/readline/include
-#LDFLAGS 	= -Llibft/ -lft -Lvendor/readline/lib -lreadline
+INCLUDES 	= -I$(INCDIR) -Ivendor/readline/include
+LDFLAGS 	= -Llibft/ -lft -Lvendor/readline/lib -lreadline
 
 LEAKS 		=	-fsanitize=address -g
 
@@ -96,7 +96,7 @@ all			: 	$(NAME)
 message		:	
 				@echo "$(YELLOW)Compiling program : $(NAME)$(RESET)"
 
-$(OBJDIR)/%.o: 	$(SRCDIR)/%.c
+$(OBJDIR)/%.o: 	$(SRCDIR)/%.c $(INCDIR)
 				@mkdir -p $(dir $@)
 				@printf "Compiling $(YELLOW)$<$(RESET)\r"
 				@$(CC) $(CFLAGS) $(LEAKS) $(INCLUDES) -c $< -o $@
@@ -134,4 +134,4 @@ re			: 	fclean all
 -include $(OBJS:.o=.d)
 
 # Phony targets
-.PHONY		: 	all clean fclean re message
+.PHONY		: 	all clean fclean re

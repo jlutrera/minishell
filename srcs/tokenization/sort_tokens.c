@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static void	swap_tokens(t_token **token_list, t_token *t1, t_token *t2)
 {

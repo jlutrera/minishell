@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static void	ft_dup_fd(t_pipe **pipe_s, int *stdout_cpy, int *stdin_cpy)
 {

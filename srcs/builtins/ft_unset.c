@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static int	ft_delete_var(t_token *p, char ***new_environ)
 {
@@ -20,7 +20,6 @@ static int	ft_delete_var(t_token *p, char ***new_environ)
 
 	stat = 0;
 	i = 0;
-	p->token = ft_strjoin2(p->token, "=");
 	while ((*new_environ)[i] && ft_strncmp((*new_environ)[i], \
 	p->token, ft_strlen(p->token)))
 		i++;

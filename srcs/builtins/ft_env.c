@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 static int	there_are_args(t_token *token_list)
 {
@@ -32,10 +32,22 @@ static int	there_are_args(t_token *token_list)
 	return (0);
 }
 
+static int	ft_exist_equal(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '=')
+			break ;
+	}
+	return (s[i] == '=');
+}
+
 int	ft_env(t_token *token_list, char ***new_environ, int is_pipe)
 {
 	int	i;
-	int	len;
 	int	status;
 
 	status = 0;
@@ -46,8 +58,7 @@ int	ft_env(t_token *token_list, char ***new_environ, int is_pipe)
 		i = -1;
 		while ((*new_environ)[++i])
 		{
-			len = ft_strlen((*new_environ)[i]);
-			if (ft_strcmp((*new_environ)[i] + len - 2, "''"))
+			if (ft_exist_equal((*new_environ)[i]))
 			{
 				ft_putstr_fd((*new_environ)[i], STDOUT_FILENO);
 				ft_putchar_fd('\n', STDOUT_FILENO);
